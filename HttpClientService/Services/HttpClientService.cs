@@ -15,9 +15,9 @@ namespace HttpClientService.Services
     {
         private readonly HttpClient _httpClient;
 
-        public HttpClientService(HttpClient httpClient)
+        public HttpClientService(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
+            _httpClient = httpClientFactory.CreateClient();
         }
 
         public async Task<IHttpResponse<string>> RequestAsync(IRequest request)
