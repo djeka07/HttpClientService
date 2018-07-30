@@ -1,0 +1,9 @@
+C:\projects\Utils\HttpClientService\bin\Debug\netstandard2.0\HttpClientService.deps.json
+C:\projects\Utils\HttpClientService\bin\Debug\netstandard2.0\HttpClientService.dll
+C:\projects\Utils\HttpClientService\bin\Debug\netstandard2.0\HttpClientService.pdb
+C:\projects\Utils\HttpClientService\obj\Debug\netstandard2.0\HttpClientService.csproj.CoreCompileInputs.cache
+C:\projects\Utils\HttpClientService\obj\Debug\netstandard2.0\HttpClientService.AssemblyInfoInputs.cache
+C:\projects\Utils\HttpClientService\obj\Debug\netstandard2.0\HttpClientService.AssemblyInfo.cs
+C:\projects\Utils\HttpClientService\obj\Debug\netstandard2.0\HttpClientService.dll
+C:\projects\Utils\HttpClientService\obj\Debug\netstandard2.0\HttpClientService.pdb
+C:\projects\Utils\HttpClientService\obj\Debug\netstandard2.0\HttpClientService.csprojAssemblyReference.cache
