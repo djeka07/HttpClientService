@@ -3,6 +3,7 @@ using System.Net;
 using System.Xml;
 using System.Xml.Serialization;
 using HttpClientService.Constants;
+using HttpClientService.Helpers;
 using HttpClientService.Models.Interfaces;
 using Newtonsoft.Json;
 
@@ -30,23 +31,12 @@ namespace HttpClientService.Models
             {
                     case MediaType.TextXml:
                     case MediaType.Xml:
-                        return DeserializeXml(content);    
+                        return XmlHelper.DeserializeXml<T>(content);    
                     default:
                         return JsonConvert.DeserializeObject<T>(content);
             }
         }
 
-        private T DeserializeXml(string content)
-        {
-            var serializer = new XmlSerializer(typeof(T));
-
-            using (var reader = XmlReader.Create(new StringReader(content)))
-            {
-                if (!serializer.CanDeserialize(reader))
-                    throw new XmlException($"Cannot deserialize content of type {typeof(T)}");
-                
-                return (T)serializer.Deserialize(reader);
-            }
-        }
+        
     }
 }
