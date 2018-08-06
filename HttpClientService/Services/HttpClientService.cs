@@ -22,8 +22,8 @@ namespace HttpClientService.Services
 
         public async Task<IHttpResponse<string>> RequestAsync(IRequest request)
         {
-            var result = await InternalRequest(request);
-            return await CreateResponse<string>(result);
+            var result = await InternalRequest(request).ConfigureAwait(false);
+            return await CreateResponse<string>(result).ConfigureAwait(false);
         }
 
 

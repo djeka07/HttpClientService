@@ -2,7 +2,6 @@
 {
     public enum HttpMethod
     {
-        NOTSET,
         GET,
         POST,
         PUT,

@@ -10,7 +10,7 @@ namespace HttpClientService
 {
     public static class Initialize
     {
-        public static IServiceCollection RegisterHttpClientService(this IServiceCollection services, int timeOutTimeInSeconds = 10, 
+        public static IServiceCollection AddHttpClientService(this IServiceCollection services, int timeOutTimeInSeconds = 10, 
             int numberOfRetries = 3)
         {
             services.AddHttpClient<IHttpClientService, Services.HttpClientService>()
