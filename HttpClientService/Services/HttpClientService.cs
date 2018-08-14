@@ -90,6 +90,10 @@ namespace HttpClientService.Services
             if (request == null) throw new ArgumentNullException("request is null");
             if (string.IsNullOrEmpty(request.Url)) throw new ArgumentNullException("url is string or empty");
             if (request.Method == Enums.HttpMethod.NOTSET) throw new ArgumentException("method must be set");
+            
+            if(request.Content != null && request.Content.Body != null 
+                                       && string.IsNullOrEmpty(request.Content.MediaType)) 
+                throw new ArgumentException("MediaType must be set when content body is not nulll");
         }
     }
 }

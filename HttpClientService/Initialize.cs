@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using HttpClientService.Services.Interfaces;
@@ -10,33 +11,29 @@ namespace HttpClientService
 {
     public static class Initialize
     {
-        public static IServiceCollection AddHttpClientService(this IServiceCollection services, int timeOutTimeInSeconds = 10, 
-            int numberOfRetries = 3)
+        public static IServiceCollection AddHttpClientService(this IServiceCollection services, IEnumerable<IAsyncPolicy<HttpResponseMessage>> policies = null,
+            int? handlerLifeTimeInMinutes = null)
         {
-            services.AddHttpClient<IHttpClientService, Services.HttpClientService>()
-                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-                .AddPolicyHandler(request =>
-                    Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(timeOutTimeInSeconds)))
-                .AddPolicyHandler(GetRetryPolicy(numberOfRetries))
-                .AddPolicyHandler(GetCircuitBreakerPolicy());
+            var httpClientBuilder = services.AddHttpClient<IHttpClientService, Services.HttpClientService>();
+
+            if (policies != null) 
+                httpClientBuilder = AddPolicyHandlers(httpClientBuilder, policies);
             
+            if (handlerLifeTimeInMinutes.HasValue)
+                httpClientBuilder.SetHandlerLifetime(TimeSpan.FromMinutes(handlerLifeTimeInMinutes.Value));
+                
             return services.AddSingleton<IHttpClientService, Services.HttpClientService>();
         }
 
-        private static IAsyncPolicy<HttpResponseMessage> GetRetryPolicy(int numberOfRetries)
+        private static IHttpClientBuilder AddPolicyHandlers(IHttpClientBuilder httpClientBuilder, 
+            IEnumerable<IAsyncPolicy<HttpResponseMessage>> policies)
         {
-            return HttpPolicyExtensions
-                .HandleTransientHttpError()
-                .OrResult(message => message.StatusCode == HttpStatusCode.NotFound)
-                .WaitAndRetryAsync(numberOfRetries, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
+            foreach (var asyncPolicy in policies)
+            {
+                httpClientBuilder.AddPolicyHandler(asyncPolicy);
+            }
 
-        }
-        
-        private static IAsyncPolicy<HttpResponseMessage> GetCircuitBreakerPolicy()
-        {
-            return HttpPolicyExtensions
-                .HandleTransientHttpError()
-                .CircuitBreakerAsync(5, TimeSpan.FromSeconds(30));
+            return httpClientBuilder;
         }
     }
 }
