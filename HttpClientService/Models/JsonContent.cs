@@ -16,7 +16,9 @@ namespace HttpClientService.Models
         
         public string Serialize()
         {
-            return JsonConvert.SerializeObject(Body);
+            return Body != null 
+                ? JsonConvert.SerializeObject(Body)
+                : string.Empty;
         }
     }
 }
