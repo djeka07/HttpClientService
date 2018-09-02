@@ -2,7 +2,7 @@
 
 namespace HttpClientService.Models.Interfaces
 {
-    public interface IHttpResponse<T>
+    public interface IResponse<T>
     {
         bool Success { get; }
         HttpStatusCode StatusCode { get; }

@@ -20,20 +20,20 @@ namespace HttpClientService.Services
             _httpClient = httpClientFactory.CreateClient();
         }
 
-        public async Task<IHttpResponse<string>> RequestAsync(IRequest request)
+        public async Task<IResponse<string>> RequestAsync(IRequest request)
         {
             var result = await InternalRequest(request).ConfigureAwait(false);
             return await CreateResponse<string>(result).ConfigureAwait(false);
         }
 
 
-        public async Task<IHttpResponse<T>> RequestAsync<T>(IRequest request)
+        public async Task<IResponse<T>> RequestAsync<T>(IRequest request)
         {
             var result = await InternalRequest(request).ConfigureAwait(false);
             return await CreateResponse<T>(result).ConfigureAwait(false);
         }
 
-        private async Task<IHttpResponse<T>> CreateResponse<T>(HttpResponseMessage result)
+        private async Task<IResponse<T>> CreateResponse<T>(HttpResponseMessage result)
         {
             var content = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
             return new HttpResponse<T>(result.IsSuccessStatusCode, result.StatusCode, content, result.Content.Headers.ContentType.MediaType);

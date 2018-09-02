@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace HttpClientService.Models
 {
-    public class HttpResponse<T>: IHttpResponse<T>
+    public class HttpResponse<T>: IResponse<T>
     {
         public HttpResponse(bool success, HttpStatusCode statusCode, string content, string mediaType)
         {

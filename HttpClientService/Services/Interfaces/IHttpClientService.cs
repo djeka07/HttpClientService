@@ -6,7 +6,7 @@ namespace HttpClientService.Services.Interfaces
 {
     public interface IHttpClientService
     {
-        Task<IHttpResponse<string>> RequestAsync(IRequest request);
-        Task<IHttpResponse<T>> RequestAsync<T>(IRequest request);
+        Task<IResponse<string>> RequestAsync(IRequest request);
+        Task<IResponse<T>> RequestAsync<T>(IRequest request);
     }    
 }
